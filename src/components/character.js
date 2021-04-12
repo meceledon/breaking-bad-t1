@@ -5,28 +5,40 @@ function Character({ match }) {
 
     useEffect(() => {
         fetchCharacter();
+        fetchQuotes();
         console.log(match);
     },[]);
 
-    const [loading, setLoading] = useState(true);
+    const [loading1, setLoading1] = useState(true);
+    const [loading2, setLoading2] = useState(true);
     const [character, setCharacter] = useState({});
+    const [quotes, setQuotes] = useState({});
 
     const fetchCharacter = async () => {
         const data = await fetch(`https://tarea-1-breaking-bad.herokuapp.com/api/characters?name=${match.params.character_name}`);
         const character = await data.json();
         const character_obj = character[0];
         setCharacter(character_obj);
-        setLoading(false);
+        setLoading1(false);
         console.log(character_obj);
 
     }
+
+    const fetchQuotes = async () => {
+        const data = await fetch(`https://tarea-1-breaking-bad.herokuapp.com/api/quote?author=${match.params.character_name}`);
+        const quotes = await data.json();
+        setQuotes(quotes);
+        setLoading2(false);
+        console.log(quotes);
+
+    }
     
-    if (loading) {
+    if (loading1 || loading2) {
         return(<h1>...Cargando</h1>);
     } else {
         return (
             <div className="Home">
-              {loading  && <h1>...Cargando</h1>}
+              {(loading1 || loading2) && <h1>...Cargando</h1>}
               <h1>{character.name}</h1>
               <img src={character.img} alt={character.name}></img>
               <h2>Sobrenombre: {character.nickname}</h2>
@@ -49,6 +61,12 @@ function Character({ match }) {
               {character.better_call_saul_appearance.length > 0 && character.better_call_saul_appearance.map(temp =>(
                     <h3>
                         <Link to={`/Better+Call+Saul/${temp}`}>- Temporada {temp}</Link>
+                    </h3>
+                ))}
+              <h2>Citas de {character.name}:</h2>
+              {quotes.map(quote =>(
+                    <h3>
+                        <h4>"{quote.quote}"</h4>
                     </h3>
                 ))}
             </div>
