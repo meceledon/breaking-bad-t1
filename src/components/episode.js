@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 function Episode({ match }) {
 
@@ -10,6 +10,8 @@ function Episode({ match }) {
 
     const [loading, setLoading] = useState(true);
     const [episode, setEpisode] = useState({});
+
+    let history = useHistory();
 
     const fetchEpisode = async () => {
         const data = await fetch(`https://tarea-1-breaking-bad.herokuapp.com/api/episodes/${match.params.episode}`);
@@ -38,6 +40,7 @@ function Episode({ match }) {
                         <Link to={`/characters/${character.replace(/\s/g, '+')}`}>- {character}</Link>
                     </h3>
                 ))}
+              <button onClick={() => history.goBack()}><b>Volver</b></button>
             </div>
           );
     }

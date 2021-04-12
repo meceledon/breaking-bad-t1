@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 function Character({ match }) {
 
@@ -13,6 +13,8 @@ function Character({ match }) {
     const [loading2, setLoading2] = useState(true);
     const [character, setCharacter] = useState({});
     const [quotes, setQuotes] = useState({});
+
+    let history = useHistory();
 
     const fetchCharacter = async () => {
         const data = await fetch(`https://tarea-1-breaking-bad.herokuapp.com/api/characters?name=${match.params.character_name}`);
@@ -69,6 +71,7 @@ function Character({ match }) {
                         <h4>"{quote.quote}"</h4>
                     </h3>
                 ))}
+              <button onClick={() => history.goBack()}><b>Volver</b></button>
             </div>
           );
     }

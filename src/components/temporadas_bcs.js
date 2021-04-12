@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 
 function Temporadas_bcs({ match }) {
 
@@ -10,6 +10,8 @@ function Temporadas_bcs({ match }) {
 
     const [loading, setLoading] = useState(true);
     const [episodes, setEpisodes] = useState([]);
+
+    let history = useHistory();
 
     const fetchEpisodes = async () => {
         const data = await fetch('https://tarea-1-breaking-bad.herokuapp.com/api/episodes?series=Better+Call+Saul');
@@ -44,7 +46,7 @@ function Temporadas_bcs({ match }) {
             </h3>
         ))}
       </div>
-      
+      <button onClick={() => history.goBack()}><b>Volver</b></button>
     </div>
   );
 }
