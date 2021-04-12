@@ -17,7 +17,7 @@ function App() {
           <Route path="/Breaking+Bad/:temp" exact component={Temporadas_bb} />
           <Route path="/Better+Call+Saul/:temp" component={Temporadas_bcs} />
           <Route path="/episodes/:episode" component={Episode} />
-          <Route path="/characters/:character_name" component={Character} />
+          <Route path="/characters/:character_name" exact component={Character} />
           
         </div>
       </Switch>
